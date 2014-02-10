@@ -1,0 +1,26 @@
+{
+    "manifest_version": 2,
+    "name": "NicoRF",
+    "version": "1.0",
+
+    "description": "ニコニコ動画ランキングで投稿者を表示したりする拡張。",
+
+    "icons": {
+        "16": "icons/16.png",
+        "48": "icons/48.png",
+        "128": "icons/128.png"
+    },
+
+    "permissions": [
+        "storage",
+        "unlimitedStorage",
+        "http://www.nicochart.jp/"
+    ],
+
+    "content_scripts": [
+        {
+            "matches": ["http://www.nicovideo.jp/ranking/*"],
+            "js": ["js/jquery.min.js", "js/script.js"]
+        }
+    ]
+}
