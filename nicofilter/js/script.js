@@ -3,12 +3,12 @@ $(function(){
     function getVideoInfo(thisObject, id, callback){
         $.ajax({
             type: 'GET',
-            url: 'http://www.nicochart.jp/watch/' + id,
+            url: 'http://ext.nicovideo.jp/api/getthumbinfo/' + id,
             dataType: 'html',
             success: function(data, textStatus, jqXHR){
-                var url = $("em.user a.nicovideo-link", data).attr("href");
-                var userId = url ? url.match(/[0-9]+$/)[0] : null;
-                var name = $("em.name", data).find("a").html();
+                var url = $("watch_url", data).text();
+                var userId = $("user_id", data).text();
+                var name = $("user_nickname", data).text();
                 console.log("url: "+url+", id:"+userId+", name:"+name);
                 if(url != undefined && id != undefined && name != undefined){
                     var user = {"id":userId, "name":name, "url":url};

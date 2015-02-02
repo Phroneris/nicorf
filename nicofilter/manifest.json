@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "NicoRF",
-    "version": "1.1",
+    "version": "1.2",
 
     "description": "ニコニコ動画ランキングで投稿者を表示したりする拡張。",
 
@@ -14,16 +14,8 @@
     "permissions": [
         "storage",
         "unlimitedStorage",
-        "http://www.nicochart.jp/"
+        "http://ext.nicovideo.jp/*"
     ],
-
-    /*
-    "browser_action": {
-        "default_title": "",
-        "default_icon": "icons/19.png",
-        "default_popup": "html/popup.html"
-    },
-    */
 
     "content_scripts": [
         {
@@ -35,6 +27,4 @@
             "js": ["js/jquery.min.js", "js/watch.js"]
         }
     ]
-
-    // "options_page": "html/options.html"
 }
