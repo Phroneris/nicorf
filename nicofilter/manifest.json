@@ -20,7 +20,11 @@
     "content_scripts": [
         {
             "matches": ["http://www.nicovideo.jp/ranking/*"],
-            "js": ["js/jquery.min.js", "js/script.js"]
+            "js": ["js/jquery.min.js", "js/script.js", "js/ranking.js"]
+        },
+        {
+            "matches": ["http://www.nicovideo.jp/tag/*"],
+            "js": ["js/jquery.min.js", "js/script.js", "js/tag.js"]
         },
         {
             "matches": ["http://www.nicovideo.jp/watch/*"],
