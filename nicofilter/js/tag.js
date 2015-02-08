@@ -5,6 +5,12 @@ $(function(){
         var html = p.html();
         html = html + "<br/>BY： <a href=\"http://www.nicovideo.jp/user/" + userData['id'] + "\">" + userData['name'] + "</a>";
         p.html(html);
+        if (userData["disabled"] == 1) {
+            element.find(".itemTime").css({"display":"none"});
+            element.find(".uadWrap").css({"display":"none"});
+            element.find(".itemContent").css({"display":"none"});
+            element.append("<div>非表示にしました</div>");
+        }
     };
 
     chrome.storage.local.get("watchList", function(item){
