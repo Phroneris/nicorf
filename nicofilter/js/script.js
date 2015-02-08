@@ -7,7 +7,7 @@ $.getVideoInfo = function(thisObject, id, callback){
             var url = $("watch_url", data).text();
             var userId = $("user_id", data).text();
             var name = $("user_nickname", data).text();
-            console.log("url: "+url+", id:"+userId+", name:"+name);
+            // console.log("url: "+url+", id:"+userId+", name:"+name);
             if(url != undefined && id != undefined && name != undefined){
                 var user = {"id":userId, "name":name, "url":url};
                 var str = JSON.stringify(user);

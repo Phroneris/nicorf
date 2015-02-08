@@ -18,34 +18,34 @@ $(function(){
         $("li.item").each(function(){
             var thisObject = $(this);
             var videoId = thisObject.find('.itemThumb').data('id');
-            chrome.storage.local.get(videoId, function(item){
-                var userId = item[videoId];
-                // console.log('got userId:'+userId+" - videoId of "+videoId);
-                if(!userId){
-                    $.getVideoInfo(thisObject, videoId, function(elem, user){
-                        updateItem(elem, user);
-                    });
-                }else{
-                    chrome.storage.local.get(userId, function(item){
-                        var user = item[userId];
-                        // console.log('got user data:'+user);
-                        if(!user){
-                            $.getVideoInfo(thisObject, videoId, function(elem, user){
-                                updateItem(elem, user);
-                            });
-                        }else{
-                            userData = JSON.parse(user);
-                            updateItem(thisObject, userData);
-                        }
-                    });
-                }
-            });
+            if (videoId) {
+                chrome.storage.local.get(videoId, function(item){
+                    var userId = item[videoId];
+                    // console.log('got userId:'+userId+" - videoId of "+videoId);
+                    if(!userId){
+                        $.getVideoInfo(thisObject, videoId, function(elem, user){
+                            updateItem(elem, user);
+                        });
+                    }else{
+                        chrome.storage.local.get(userId, function(item){
+                            var user = item[userId];
+                            // console.log('got user data:'+user);
+                            if(!user){
+                                $.getVideoInfo(thisObject, videoId, function(elem, user){
+                                    updateItem(elem, user);
+                                });
+                            }else{
+                                userData = JSON.parse(user);
+                                updateItem(thisObject, userData);
+                            }
+                        });
+                    }
+                });
 
-            if (watchList[videoId]) {
-                console.log("videoId:"+videoId+"---"+watchList[videoId]);
-                thisObject.css({opacity:0.3});
-                var numWrap = thisObject.find("div.rankingNumWrap");
-                numWrap.append('<p>視聴済み:'+watchList[videoId]+'回</p>');
+                if (watchList[videoId]) {
+                    // console.log("videoId:"+videoId+"---"+watchList[videoId]);
+                    thisObject.css({opacity:0.3});
+                }
             }
         });
     });

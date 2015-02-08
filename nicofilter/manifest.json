@@ -27,6 +27,10 @@
             "js": ["js/jquery.min.js", "js/script.js", "js/tag.js"]
         },
         {
+            "matches": ["http://www.nicovideo.jp/search/*"],
+            "js": ["js/jquery.min.js", "js/script.js", "js/tag.js"]
+        },
+        {
             "matches": ["http://www.nicovideo.jp/watch/*"],
             "js": ["js/jquery.min.js", "js/watch.js"]
         }
