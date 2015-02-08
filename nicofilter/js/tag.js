@@ -3,7 +3,7 @@ $(function(){
         // console.log(userData['id']+': '+userData['name']);
         var p = element.find("p.itemTime");
         var html = p.html();
-        html = html + "<br/>BY： " + userData['name'];
+        html = html + "<br/>BY： <a href=\"http://www.nicovideo.jp/user/" + userData['id'] + "\">" + userData['name'] + "</a>";
         p.html(html);
     };
 
