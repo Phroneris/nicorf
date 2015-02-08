@@ -1,96 +1,43 @@
-$(function(){
-
-    function getVideoInfo(thisObject, id, callback){
-        $.ajax({
-            type: 'GET',
-            url: 'http://ext.nicovideo.jp/api/getthumbinfo/' + id,
-            dataType: 'html',
-            success: function(data, textStatus, jqXHR){
-                var url = $("watch_url", data).text();
-                var userId = $("user_id", data).text();
-                var name = $("user_nickname", data).text();
-                console.log("url: "+url+", id:"+userId+", name:"+name);
-                if(url != undefined && id != undefined && name != undefined){
-                    var user = {"id":userId, "name":name, "url":url};
-                    var str = JSON.stringify(user);
-                    var item = {};
-                    item[userId] = str;
-                    item[id] = userId;
-                    chrome.storage.local.set(item, function(){
-                        // console.log('item saved id:'+id);
-                    });
-                    callback(thisObject, user);
-                }else{
-                    console.log("error id="+id+": ");
-                    if(!url) url = "取得に失敗しました";
-                    if(!userId) userId = "取得に失敗しました";
-                    if(!name) name = "取得に失敗しました";
-                    chrome.storage.local.get(userId, function(item){
-                        if(item[userId] != undefined){
-                            callback(thisObject, JSON.parse(item[userId]));
-                        }else{
-                            callback(thisObject, {"id":userId, "name":name, "url":url});
-                        }
-                    });
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown){
+$.getVideoInfo = function(thisObject, id, callback){
+    $.ajax({
+        type: 'GET',
+        url: 'http://ext.nicovideo.jp/api/getthumbinfo/' + id,
+        dataType: 'html',
+        success: function(data, textStatus, jqXHR){
+            var url = $("watch_url", data).text();
+            var userId = $("user_id", data).text();
+            var name = $("user_nickname", data).text();
+            console.log("url: "+url+", id:"+userId+", name:"+name);
+            if(url != undefined && id != undefined && name != undefined){
+                var user = {"id":userId, "name":name, "url":url};
+                var str = JSON.stringify(user);
+                var item = {};
+                item[userId] = str;
+                item[id] = userId;
+                chrome.storage.local.set(item, function(){
+                    // console.log('item saved id:'+id);
+                });
+                callback(thisObject, user);
+            }else{
                 console.log("error id="+id+": ");
-                console.log(errorThrown);
-            },
-            complete: function(jqXHR, textStatus){
+                if(!url) url = "取得に失敗しました";
+                if(!userId) userId = "取得に失敗しました";
+                if(!name) name = "取得に失敗しました";
+                chrome.storage.local.get(userId, function(item){
+                    if(item[userId] != undefined){
+                        callback(thisObject, JSON.parse(item[userId]));
+                    }else{
+                        callback(thisObject, {"id":userId, "name":name, "url":url});
+                    }
+                });
             }
-        });
-    };
-
-    function updateRanking(rankingElement, userData){
-        // console.log(userData['id']+': '+userData['name']);
-        var p = rankingElement.find("p.itemTime");
-        var html = p.html();
-        html = html + "<br/>BY： " + userData['name'];
-        p.html(html);
-    };
-
-    chrome.storage.local.get("watchList", function(item){
-        var watchList = item["watchList"];
-        if (!watchList) {
-            watchList = {};
-        } else {
-            watchList = JSON.parse(watchList);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log("error id="+id+": ");
+            console.log(errorThrown);
+        },
+        complete: function(jqXHR, textStatus){
         }
-
-        $("li.item.videoRanking").each(function(){
-            var thisObject = $(this);
-            var videoId = thisObject.data('id');
-            chrome.storage.local.get(videoId, function(item){
-                var userId = item[videoId];
-                // console.log('got userId:'+userId+" - videoId of "+videoId);
-                if(!userId){
-                    getVideoInfo(thisObject, videoId, function(elem, user){
-                        updateRanking(elem, user);
-                    });
-                }else{
-                    chrome.storage.local.get(userId, function(item){
-                        var user = item[userId];
-                        // console.log('got user data:'+user);
-                        if(!user){
-                            getVideoInfo(thisObject, videoId, function(elem, user){
-                                updateRanking(elem, user);
-                            });
-                        }else{
-                            userData = JSON.parse(user);
-                            updateRanking(thisObject, userData);
-                        }
-                    });
-                }
-            });
-
-            if (watchList[videoId]) {
-                console.log("videoId:"+videoId+"---"+watchList[videoId]);
-                thisObject.css({opacity:0.3});
-                var numWrap = thisObject.find("div.rankingNumWrap");
-                numWrap.append('<p>視聴済み:'+watchList[videoId]+'回</p>');
-            }
-        });
     });
-});
+};
+
