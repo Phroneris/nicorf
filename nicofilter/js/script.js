@@ -11,13 +11,19 @@ $.getVideoInfo = function(thisObject, id, callback){
             if(url != undefined && id != undefined && name != undefined){
                 var user = {"id":userId, "name":name, "url":url};
                 var str = JSON.stringify(user);
-                var item = {};
-                item[userId] = str;
-                item[id] = userId;
-                chrome.storage.local.set(item, function(){
-                    // console.log('item saved id:'+id);
+                chrome.storage.local.get(userId, function(result){
+                    if(result[userId] != undefined){
+                        callback(thisObject, JSON.parse(result[userId]));
+                    }else{
+                        var item = {};
+                        item[userId] = str;
+                        item[id] = userId;
+                        chrome.storage.local.set(item, function(){
+                            // console.log('item saved id:'+id);
+                        });
+                        callback(thisObject, user);
+                    }
                 });
-                callback(thisObject, user);
             }else{
                 console.log("error id="+id+": ");
                 if(!url) url = "取得に失敗しました";
