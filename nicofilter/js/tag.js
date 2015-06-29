@@ -3,7 +3,11 @@ $(function(){
         // console.log(userData['id']+': '+userData['name']);
         var p = element.find("p.itemTime");
         var html = p.html();
-        html = html + "<br/>BY： <a href=\"http://www.nicovideo.jp/user/" + userData['id'] + "\">" + userData['name'] + "</a>";
+        if (userData["isUser"] == false) {
+            html = html + "<br/>BY： " + userData['name'] + "（ch）";
+        } else {
+            html = html + "<br/>BY： <a href=\"http://www.nicovideo.jp/user/" + userData['id'] + "\">" + userData['name'] + "</a>";
+        }
         p.html(html);
         if (userData["disabled"] == 1) {
             element.find(".itemTime").css({"display":"none"});
