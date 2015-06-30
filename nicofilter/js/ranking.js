@@ -1,18 +1,53 @@
+
 $(function(){
-    function updateRanking(rankingElement, userData){
+    function updateRanking(rankingElement, userData, onclick){
         // console.log(userData['id']+': '+userData['name']);
         var p = rankingElement.find("p.itemTime");
         var html = p.html();
-        if (userData["isUser"] == false) {
-            html = html + "<br/>BY：" + userData['name'] + "（ch）";
-        } else {
-            html = html + "<br/>BY： <a href=\"http://www.nicovideo.jp/user/" + userData['id'] + "\">" + userData['name'] + "</a>";
+        if (onclick !== true) {
+            if (userData["isUser"] == false) {
+                html = html + "<br/>BY：" + userData['name'] + "（ch）<br/>";
+            } else {
+                html = html + "<br/>BY： <a href=\"http://www.nicovideo.jp/user/" + userData['id'] + "\">" + userData['name'] + "</a><br/>";
+            }
+            p.html(html);
+
+            rankingElement.find(".rankingNumWrap").append('<a href="javascript:void(0)" class="disabler">非表示にする</a>');
+            rankingElement.find(".rankingNumWrap").append('<a href="javascript:void(0)" class="enabler">表示する</a>');
+            rankingElement.find(".disabler").on("click", function(e){
+                userData["disabled"] = 1;
+                var id = userData["id"];
+                var data = {};
+                data[id] = JSON.stringify(userData);
+                chrome.storage.local.set(data, function(){
+                    console.log(id + " : user info saved");
+                    updateRanking(rankingElement, userData, true);
+                });
+            });
+            rankingElement.find(".enabler").on("click", function(e){
+                var id = userData["id"];
+                userData["disabled"] = 0;
+                var data = {};
+                data[id] = JSON.stringify(userData);
+                chrome.storage.local.set(data, function(){
+                    console.log(id + " : user info saved");
+                    updateRanking(rankingElement, userData, true);
+                });
+            });
         }
-        p.html(html);
+
         if (userData["disabled"] == 1) {
             rankingElement.find(".videoList01Wrap").css({"display":"none"});
             rankingElement.find(".itemContent").css({"display":"none"});
-            rankingElement.append("<div>非表示にしました</div>");
+            rankingElement.append("<div class='disabled'>非表示にしました</div>");
+            rankingElement.find(".disabler").css({"display":"none"});
+            rankingElement.find(".enabler").css({"display":"block"});
+        } else {
+            rankingElement.find(".disabled").remove();
+            rankingElement.find(".videoList01Wrap").css({"display":"block"});
+            rankingElement.find(".itemContent").css({"display":"table"});
+            rankingElement.find(".disabler").css({"display":"block"});
+            rankingElement.find(".enabler").css({"display":"none"});
         }
     };
 
@@ -59,4 +94,5 @@ $(function(){
         });
     });
 });
+
 
