@@ -1,0 +1,38 @@
+li.videoRanking.disabled .videoList01Wrap :not(.disabledContent)
+, li.disabled .itemThumbBox :not(.disabledContent)
+, li.disabled .itemContent :not(.disabledContent)
+, li.disabled .itemData :not(.disabledContent)
+, li.disabled .itemTime :not(.disabledContent)
+{
+    visibility: hidden;
+}
+li.disabled .rankingNumWrap .disabler
+, li.disabled button.disabler
+, li.disabled .itemThumb :not(.disabledContent)
+, li.disabled .username
+, li.disabled .uadWrap :not(.disabledContent)
+, div.disabled :not(.disabledContent)
+{
+    display: none;
+}
+
+li.enabled .disabledContent
+, div.enabled .disabledContent
+{
+    display: none;
+}
+
+li.disabled .disabledContent.floatingMessage
+, div.disabled .disableContent.floatingMessage
+{
+    width: 100%;
+    font-size: x-large;
+    text-align: center;
+    position: absolute;
+    bottom: 30px;
+}
+
+a.disabler, a.enabler
+{
+    font-size: x-small;
+}

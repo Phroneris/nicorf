@@ -1,42 +1,40 @@
-{
-    "manifest_version": 2,
-    "name": "NicoRF",
-    "version": "1.5.1",
+{ "manifest_version": 2
+, "name": "NicoRF"
+, "version": "1.6.0"
+, "description": "ニコニコ動画ランキングで投稿者を表示したりする拡張。"
 
-    "description": "ニコニコ動画ランキングで投稿者を表示したりする拡張。",
+, "icons":
+    { "16": "icons/16.png"
+    , "48": "icons/48.png"
+    , "128": "icons/128.png"
+    }
 
-    "icons": {
-        "16": "icons/16.png",
-        "48": "icons/48.png",
-        "128": "icons/128.png"
-    },
+, "permissions":
+    [ "storage"
+    , "unlimitedStorage"
+    , "http://ext.nicovideo.jp/*"
+    ]
 
-    "permissions": [
-        "storage",
-        "unlimitedStorage",
-        "http://ext.nicovideo.jp/*"
-    ],
-
-    "content_scripts": [
-        {
-            "matches": ["http://www.nicovideo.jp/ranking/*"],
-            "js": ["js/jquery.min.js", "js/script.js", "js/ranking.js"]
-        },
-        {
-            "matches": ["http://www.nicovideo.jp/tag/*"],
-            "js": ["js/jquery.min.js", "js/script.js", "js/tag.js"]
-        },
-        {
-            "matches": ["http://www.nicovideo.jp/search/*"],
-            "js": ["js/jquery.min.js", "js/script.js", "js/tag.js"]
-        },
-        {
-            "matches": ["http://www.nicovideo.jp/user/*"],
-            "js": ["js/jquery.min.js", "js/user.js"]
-        },
-        {
-            "matches": ["http://www.nicovideo.jp/watch/*"],
-            "js": ["js/jquery.min.js", "js/watch.js"]
+, "content_scripts":
+    [
+        { "matches": ["http://www.nicovideo.jp/ranking/*"]
+        , "js": ["js/jquery.min.js", "js/script.js", "js/ranking.js"]
+        }
+    ,   { "matches": ["http://live.nicovideo.jp/ranking*"]
+        , "js": ["js/jquery.min.js", "js/liveranking.js"]
+        , "css": ["css/common.css"]
+        }
+    ,   { "matches": ["http://www.nicovideo.jp/tag/*"]
+        , "js": ["js/jquery.min.js", "js/script.js", "js/tag.js"]
+        }
+    ,   { "matches": ["http://www.nicovideo.jp/search/*"]
+        , "js": ["js/jquery.min.js", "js/script.js", "js/tag.js"]
+        }
+    ,   { "matches": ["http://www.nicovideo.jp/user/*"]
+        , "js": ["js/jquery.min.js", "js/user.js"]
+        }
+    ,   { "matches": ["http://www.nicovideo.jp/watch/*"]
+        , "js": ["js/jquery.min.js", "js/watch.js"]
         }
     ]
 }
