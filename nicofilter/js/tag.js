@@ -7,7 +7,7 @@ $(function(){
             if (userData["isUser"] == false) {
                 html = html + "<br/>BY： " + userData['name'] + "（ch）";
             } else {
-                html = html + "<br/>BY： <a href=\"http://www.nicovideo.jp/user/" + userData['id'] + "\">" + userData['name'] + "</a>";
+                html = html + "<br/>BY： <a href=\"https://www.nicovideo.jp/user/" + userData['id'] + "\">" + userData['name'] + "</a>";
             }
             html = html + '<br/>';
             html = html + '<button class="disabler">非表示にする</button>';

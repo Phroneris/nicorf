@@ -1,6 +1,6 @@
 
 $(function(){
-    function updateRanking(rankingElement, userData, onclick){
+    function updateRanking(rankingElement, userData, onclick) {
         // console.log(userData['id']+': '+userData['name']);
         var p = rankingElement.find("p.itemTime");
         var html = p.html();
@@ -8,7 +8,7 @@ $(function(){
             if (userData["isUser"] == false) {
                 html = html + "<br/>BY：" + userData['name'] + "（ch）<br/>";
             } else {
-                html = html + "<br/>BY： <a href=\"http://www.nicovideo.jp/user/" + userData['id'] + "\">" + userData['name'] + "</a><br/>";
+                html = html + "<br/>BY： <a href=\"https://www.nicovideo.jp/user/" + userData['id'] + "\">" + userData['name'] + "</a><br/>";
             }
             p.html(html);
 
@@ -51,7 +51,7 @@ $(function(){
         }
     };
 
-    chrome.storage.local.get("watchList", function(item){
+    chrome.storage.local.get("watchList", function(item) {
         var watchList = item["watchList"];
         if (!watchList) {
             watchList = {};
@@ -59,9 +59,13 @@ $(function(){
             watchList = JSON.parse(watchList);
         }
 
-        $("li.item.videoRanking").each(function(){
+        $("li.item.videoRanking").each(function() {
             var thisObject = $(this);
-            var videoId = thisObject.data('id');
+            var videoId = thisObject.attr('data-video-id');
+            if (!videoId) {
+              return;
+            }
+            console.log(videoId);
             chrome.storage.local.get(videoId, function(item){
                 var userId = item[videoId];
                 // console.log('got userId:'+userId+" - videoId of "+videoId);
@@ -94,5 +98,3 @@ $(function(){
         });
     });
 });
-
-

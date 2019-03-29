@@ -1,7 +1,7 @@
 $.getVideoInfo = function(thisObject, id, callback){
     $.ajax({
         type: 'GET',
-        url: 'http://ext.nicovideo.jp/api/getthumbinfo/' + id,
+        url: 'https://ext.nicovideo.jp/api/getthumbinfo/' + id,
         dataType: 'html',
         success: function(data, textStatus, jqXHR){
             var url = $("watch_url", data).text();
