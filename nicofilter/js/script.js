@@ -1,7 +1,7 @@
 $.getVideoInfo = function(thisObject, id, callback){
     $.ajax({
         type: 'GET',
-        url: 'https://ext.nicovideo.jp/api/getthumbinfo/' + id,
+        url: 'https://cors.io/?https://ext.nicovideo.jp/api/getthumbinfo/' + id, // Cross-Origin Read Blocking を回避（不安）
         dataType: 'html',
         success: function(data, textStatus, jqXHR){
             var url = $("watch_url", data).text();
