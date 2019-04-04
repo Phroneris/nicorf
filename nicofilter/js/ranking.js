@@ -1,7 +1,7 @@
 
 $(function(){
     function updateRanking(rankingElement, userData, onclick) {
-        // console.log(userData['id']+': '+userData['name']);
+        console.log(userData['id']+': '+userData['name']);
         var p = rankingElement.find("p.itemTime");
         var html = p.html();
         if (onclick !== true) {
@@ -68,7 +68,7 @@ $(function(){
             console.log(videoId);
             chrome.storage.local.get(videoId, function(item){
                 var userId = item[videoId];
-                // console.log('got userId:'+userId+" - videoId of "+videoId);
+                console.log('got userId:'+userId+" - videoId of "+videoId);
                 if(!userId){
                     $.getVideoInfo(thisObject, videoId, function(elem, user){
                         updateRanking(elem, user);
@@ -76,7 +76,7 @@ $(function(){
                 }else{
                     chrome.storage.local.get(userId, function(item){
                         var user = item[userId];
-                        // console.log('got user data:'+user);
+                        console.log('got user data:'+user);
                         if(!user){
                             $.getVideoInfo(thisObject, videoId, function(elem, user){
                                 updateRanking(elem, user);

@@ -9,7 +9,7 @@ $.getVideoInfo = function(thisObject, id, callback){
             var name = $("user_nickname", data).text();
             var chId = $("ch_id", data).text();
             var chName = $("ch_name", data).text();
-            // console.log("url: "+url+", id:"+userId+", name:"+name);
+            console.log('[script.js] '+"url: "+url+", id:"+userId+", name:"+name);
             if(url != undefined && id != '' && name != ''){
                 var user = {"id":userId, "name":name, "url":url, "isUser":true};
                 var str = JSON.stringify(user);
@@ -21,7 +21,7 @@ $.getVideoInfo = function(thisObject, id, callback){
                         item[userId] = str;
                         item[id] = userId;
                         chrome.storage.local.set(item, function(){
-                            // console.log('item saved id:'+id);
+                            console.log('[script.js-video] '+'item saved id:'+id);
                         });
                         callback(thisObject, user);
                     }
@@ -37,13 +37,13 @@ $.getVideoInfo = function(thisObject, id, callback){
                         item[chId] = str;
                         item[id] = chId;
                         chrome.storage.local.set(item, function(){
-                            // console.log('item saved id:'+id);
+                            console.log('[script.js-channel] '+'item saved id:'+id);
                         });
                         callback(thisObject, user);
                     }
                 });
             }else{
-                console.log("error id="+id+": ");
+                console.log('[script.js-else] '+"error id="+id+": dataは取れたが中身を取れなかった");
                 if(!url) url = "取得に失敗しました";
                 if(!userId) userId = "取得に失敗しました";
                 if(!name) name = "取得に失敗しました";
@@ -57,7 +57,7 @@ $.getVideoInfo = function(thisObject, id, callback){
             }
         },
         error: function(jqXHR, textStatus, errorThrown){
-            console.log("error id="+id+": ");
+            console.log('[script.js-error] '+"error id="+id+": data自体取れなかった");
             console.log(errorThrown);
         },
         complete: function(jqXHR, textStatus){

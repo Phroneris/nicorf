@@ -1,6 +1,6 @@
 $(function(){
     function updateItem(element, userData, onclick){
-        // console.log(userData['id']+': '+userData['name']);
+        console.log('[tag.js-updateItem-start] '+userData['id']+': '+userData['name']);
         var p = element.find("p.itemTime");
         var html = p.html();
         if (onclick !== true) {
@@ -19,7 +19,7 @@ $(function(){
                 var data = {};
                 data[id] = JSON.stringify(userData);
                 chrome.storage.local.set(data, function(){
-                    console.log(id + " : user info saved");
+                    console.log('[tag.js-updateItem-onclick] '+id + " : user info saved");
                     updateItem(element, userData, true);
                 });
             });
@@ -38,7 +38,7 @@ $(function(){
                 var data = {};
                 data[id] = JSON.stringify(userData);
                 chrome.storage.local.set(data, function(){
-                    console.log(id + " : user info saved");
+                    console.log('[tag.js-updateItem-disabled] '+id + " : user info saved");
                     updateItem(element, userData, true);
                 });
             });
@@ -53,13 +53,21 @@ $(function(){
         }
     };
 
+    chrome.storage.local.get(function(item){
+        console.log('[tag.js-chrome] item all:');
+        console.info(item);
+    });
     chrome.storage.local.get("watchList", function(item){
+        console.log('[tag.js-chrome] item:');
+        console.log(item);
         var watchList = item["watchList"];
         if (!watchList) {
             watchList = {};
         } else {
             watchList = JSON.parse(watchList);
         }
+        console.log('[tag.js-chrome] watchList:');
+        console.log(watchList);
 
         $("li.item").each(function(){
             var thisObject = $(this);
@@ -67,7 +75,7 @@ $(function(){
             if (videoId) {
                 chrome.storage.local.get(videoId, function(item){
                     var userId = item[videoId];
-                    // console.log('got userId:'+userId+" - videoId of "+videoId);
+                    console.log('[tag.js-chrome-ifVideoId] '+'got userId:'+userId+" - videoId of "+videoId);
                     if(!userId){
                         $.getVideoInfo(thisObject, videoId, function(elem, user){
                             updateItem(elem, user);
@@ -75,7 +83,7 @@ $(function(){
                     }else{
                         chrome.storage.local.get(userId, function(item){
                             var user = item[userId];
-                            // console.log('got user data:'+user);
+                            console.log('[tag.js-chrome-ifUserId] '+'got user data:'+user);
                             if(!user){
                                 $.getVideoInfo(thisObject, videoId, function(elem, user){
                                     updateItem(elem, user);
@@ -89,7 +97,7 @@ $(function(){
                 });
 
                 if (watchList[videoId]) {
-                    // console.log("videoId:"+videoId+"---"+watchList[videoId]);
+                    console.log('[tag.js-chrome-ifWlVideoId] '+"videoId:"+videoId+"---"+watchList[videoId]);
                     thisObject.css({opacity:0.3});
                 }
             }
