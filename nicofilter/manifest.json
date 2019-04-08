@@ -22,38 +22,38 @@
             "https://www.nicovideo.jp/ranking/*"
             , "http://www.nicovideo.jp/ranking/*"
           ]
-        , "js": ["js/vendor/jquery-3.3.1.js", "js/script.js", "js/ranking.js"]
+        , "js": ["js/vendor/jquery.min.js", "js/script.js", "js/ranking.js"]
         }
     ,   { "matches": [
             "http://live.nicovideo.jp/ranking*"
             , "https://live.nicovideo.jp/ranking*"
           ]
-        , "js": ["js/vendor/jquery-3.3.1.js", "js/liveranking.js"]
+        , "js": ["js/vendor/jquery.min.js", "js/liveranking.js"]
         , "css": ["css/common.css"]
         }
     ,   { "matches": [
             "http://www.nicovideo.jp/tag/*"
             , "https://www.nicovideo.jp/tag/*"
           ]
-        , "js": ["js/vendor/jquery-3.3.1.js", "js/script.js", "js/tag.js"]
+        , "js": ["js/vendor/jquery.min.js", "js/script.js", "js/tag.js"]
         }
     ,   { "matches": [
             "https://www.nicovideo.jp/search/*"
             , "http://www.nicovideo.jp/search/*"
           ]
-        , "js": ["js/vendor/jquery-3.3.1.js", "js/script.js", "js/tag.js"]
+        , "js": ["js/vendor/jquery.min.js", "js/script.js", "js/tag.js"]
         }
     ,   { "matches": [
             "http://www.nicovideo.jp/user/*"
             , "https://www.nicovideo.jp/user/*"
           ]
-        , "js": ["js/vendor/jquery-3.3.1.js", "js/user.js"]
+        , "js": ["js/vendor/jquery.min.js", "js/user.js"]
         }
     ,   { "matches": [
             "http://www.nicovideo.jp/watch/*"
             , "https://www.nicovideo.jp/watch/*"
           ]
-        , "js": ["js/vendor/jquery-3.3.1.js", "js/watch.js"]
+        , "js": ["js/vendor/jquery.min.js", "js/watch.js"]
         }
     ]
 }
