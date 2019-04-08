@@ -72,10 +72,17 @@ $(function(){
         $("ul[data-video-list] li.item").each(function(){
             var thisObject = $(this);
             var videoId = thisObject.find('.itemThumb').data('id');
+            var isAd = false;
+            if(!videoId) {
+                const adPointUrl = thisObject.find('.count.ads a').attr('href');
+                videoId = adPointUrl ? adPointUrl.replace(/^.+publish\/([a-z]{2}[0-9]+).*?$/, '$1') : "";
+                isAd = videoId ? true : false;
+                console.log('[tag.js-chrome-!videoId] videoId: '+videoId);
+            }
             if (videoId) {
                 chrome.storage.local.get(videoId, function(item){
                     var userId = item[videoId];
-                    console.log('[tag.js-chrome-ifVideoId] '+'got userId:'+userId+" - videoId of "+videoId);
+                    console.log('[tag.js-chrome-ifVideoId] '+'got userId:'+userId+" - videoId of "+videoId+(isAd ? " - isAd : "+isAd.toString() : ""));
                     if(!userId){
                         $.getVideoInfo(thisObject, videoId, function(elem, user){
                             updateItem(elem, user);
