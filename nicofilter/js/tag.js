@@ -69,7 +69,7 @@ $(function(){
         console.log('[tag.js-chrome] watchList:');
         console.log(watchList);
 
-        $("li.item").each(function(){
+        $("ul[data-video-list] li.item").each(function(){
             var thisObject = $(this);
             var videoId = thisObject.find('.itemThumb').data('id');
             if (videoId) {
