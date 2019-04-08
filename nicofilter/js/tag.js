@@ -59,6 +59,10 @@ $(function(){
             console.info(item);
         });
     }
+    setTimeout(() => {
+    // 今の所こうしないとニコニ広告のやつが高確率で失敗する（adPointUrlが'#'になる）
+    // できれば再取得ボタンを付けたい
+
     chrome.storage.local.get("watchList", function(item){
         dbg('[tag.js-chrome] item:');
         dbg(item);
@@ -115,5 +119,7 @@ $(function(){
             }
         });
     });
+
+    }, 500);
 });
 
