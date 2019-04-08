@@ -74,10 +74,13 @@ $(function(){
             var videoId = thisObject.find('.itemThumb').data('id');
             var isAd = false;
             if(!videoId) {
+                dbg('[tag.js-chrome-!videoId] adPointUrl, videoId:');
                 const adPointUrl = thisObject.find('.count.ads a').attr('href');
-                videoId = adPointUrl ? adPointUrl.replace(/^.+publish\/([a-z]{2}[0-9]+).*?$/, '$1') : "";
+                dbg(adPointUrl);
+                const ptn = /^.+publish\/([a-z]{2}[0-9]+).*?$/;
+                videoId = adPointUrl.match(ptn) ? adPointUrl.replace(ptn, '$1') : false;
                 isAd = videoId ? true : false;
-                dbg('[tag.js-chrome-!videoId] videoId: '+videoId);
+                dbg(videoId);
             }
             if (videoId) {
                 chrome.storage.local.get(videoId, function(item){
