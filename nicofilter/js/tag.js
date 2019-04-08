@@ -53,10 +53,12 @@ $(function(){
         }
     };
 
-    chrome.storage.local.get(function(item){
-        dbg('[tag.js-chrome] item all:');
-        isDbg && console.info(item);
-    });
+    if (isDbg && 0) { // 使う時1に
+        chrome.storage.local.get(function(item){
+            dbg('[tag.js-chrome] item all:');
+            console.info(item);
+        });
+    }
     chrome.storage.local.get("watchList", function(item){
         dbg('[tag.js-chrome] item:');
         dbg(item);
