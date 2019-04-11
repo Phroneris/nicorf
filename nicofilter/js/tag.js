@@ -1,13 +1,13 @@
 $(function(){
     function updateItem(element, userData, onclick){
-        dbg('[tag.js-updateItem-start] '+userData['id']+': '+userData['name']);
+        dbg(`[tag.js-updateItem-start] ${userData['id']}: ${userData['name']}`);
         var p = element.find("p.itemTime");
         var html = p.html();
         if (onclick !== true) {
             if (userData["isUser"] == false) {
-                html = html + "<br/>BY： " + userData['name'] + "（ch）";
+                html = html + `<br/>BY： ${userData['name']}（ch）`;
             } else {
-                html = html + "<br/>BY： <a href=\"https://www.nicovideo.jp/user/" + userData['id'] + "\">" + userData['name'] + "</a>";
+                html = html + `<br/>BY： <a href="https://www.nicovideo.jp/user/${userData['id']}">${userData['name']}</a>`;
             }
             html = html + '<br/>';
             html = html + '<button class="disabler">非表示にする</button>';
@@ -19,7 +19,7 @@ $(function(){
                 var data = {};
                 data[id] = JSON.stringify(userData);
                 chrome.storage.local.set(data, function(){
-                    dbg('[tag.js-updateItem-onclick] '+id + " : user info saved");
+                    dbg(`[tag.js-updateItem-nowDisabled] ${id}: user info saved`);
                     updateItem(element, userData, true);
                 });
             });
@@ -38,7 +38,7 @@ $(function(){
                 var data = {};
                 data[id] = JSON.stringify(userData);
                 chrome.storage.local.set(data, function(){
-                    dbg('[tag.js-updateItem-disabled] '+id + " : user info saved");
+                    dbg(`[tag.js-updateItem-nowEnabled] ${id}: user info saved`);
                     updateItem(element, userData, true);
                 });
             });
@@ -91,7 +91,8 @@ $(function(){
             if (videoId) {
                 chrome.storage.local.get(videoId, function(item){
                     var userId = item[videoId];
-                    dbg('[tag.js-chrome-ifVideoId] '+'got userId:'+userId+" - videoId of "+videoId+(isAd ? " - isAd : "+isAd.toString() : ""));
+                    const isAdStr = isAd ? ` - isAd: ${isAd.toString()}` : '';
+                    dbg(`[tag.js-chrome-ifVideoId] got userId: ${userId} - videoId of ${videoId}${isAdStr}`);
                     if(!userId){
                         $.getVideoInfo(thisObject, videoId, function(elem, user){
                             updateItem(elem, user);
@@ -99,7 +100,7 @@ $(function(){
                     }else{
                         chrome.storage.local.get(userId, function(item){
                             var user = item[userId];
-                            dbg('[tag.js-chrome-ifUserId] '+'got user data:'+user);
+                            dbg(`[tag.js-chrome-ifUserId] got user data: ${user}`);
                             if(!user){
                                 $.getVideoInfo(thisObject, videoId, function(elem, user){
                                     updateItem(elem, user);
@@ -113,7 +114,7 @@ $(function(){
                 });
 
                 if (watchList[videoId]) {
-                    dbg('[tag.js-chrome-ifWlVideoId] '+"videoId:"+videoId+"---"+watchList[videoId]);
+                    dbg(`[tag.js-chrome-ifWlVideoId] videoId: ${videoId} --- ${watchList[videoId]}`);
                     thisObject.css({opacity:0.3});
                 }
             }
