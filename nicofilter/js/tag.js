@@ -5,7 +5,7 @@ $(function(){
         var html = p.html();
         if (onclick !== true) {
             if (userData["isUser"] == false) {
-                html = html + `<br/>BY： ${userData['name']}（ch）`;
+                html = html + `<br/>BY： <a href="https://ch.nicovideo.jp/channel/ch${userData['id']}">${userData['name']}</a>（ch）`;
             } else {
                 html = html + `<br/>BY： <a href="https://www.nicovideo.jp/user/${userData['id']}">${userData['name']}</a>`;
             }
