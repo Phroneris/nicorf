@@ -24,6 +24,7 @@ $(function(){
             element.find(".itemTime").css({"display":"none"});
             element.find(".uadWrap").css({"display":"none"});
             element.find(".itemContent").css({"display":"none"});
+            element.append('<div class="dummyTime" style="color:#999;">-</div>');
             element.append('<div class="disabled">非表示にしました</div>');
             element.append('<button class="enabler">表示する</button>');
             element.find(".disabler").css({"display":"none"});
@@ -40,6 +41,7 @@ $(function(){
             });
             dbg(`[tag.js-updateItem] ${userData["id"]}: 非表示完了`);
         } else { // 初期化時で非表示ユーザーではない時 or クリックして表示した時
+            element.find(".dummyTime").remove();
             element.find(".disabled").remove();
             element.find(".enabler").remove();
             element.find(".itemTime").css({"display":"block"});
