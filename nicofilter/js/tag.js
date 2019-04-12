@@ -1,6 +1,6 @@
 $(function(){
     function updateItem(element, userData, onclick){
-        dbg(`[tag.js-updateItem-start] ${userData['id']}: ${userData['name']}`);
+        dbg(`[tag.js-updateItem-始] ID: ${userData['id']}, name: ${userData['name']}`);
         var p = element.find("p.itemTime");
         var html = p.html();
         if (onclick !== true) { // 初期化時
@@ -13,18 +13,18 @@ $(function(){
                 +   `<button class="disabler">非表示にする</button>`;
             p.html(html);
 
-            element.find(".disabler").on("click", function(e){
+            element.find(".disabler").on("click", function(e){ // 初期化時はdisablerクリック時ではないのでスルーされる。クリック時はいきなりここに来る
                 var id = userData["id"];
                 userData["disabled"] = 1;
                 var data = {};
                 data[id] = JSON.stringify(userData);
                 chrome.storage.local.set(data, function(){
-                    dbg(`[tag.js-updateItem-nowDisabled] ${id}: user info saved`);
+                    dbg(`[tag.js-updateItem] ${id}: ユーザーを非表示として保存`);
                     updateItem(element, userData, true);
                 });
             });
         }
-        if (userData["disabled"] == 1) { // クリックして非表示にした時
+        if (userData["disabled"] == 1) { // 初期化時で非表示ユーザーの時 or クリックして非表示にした時
             element.find(".itemTime").css({"display":"none"});
             element.find(".uadWrap").css({"display":"none"});
             element.find(".itemContent").css({"display":"none"});
@@ -32,17 +32,18 @@ $(function(){
             element.append('<button class="enabler">表示する</button>');
             element.find(".disabler").css({"display":"none"});
             element.find(".enabler").css({"display":"block"});
-            element.find(".enabler").on("click", function(e){
+            element.find(".enabler").on("click", function(e){ // 初期化時はenablerクリック時ではないのでスルーされる。クリック時はいきなりここに来る
                 var id = userData["id"];
                 userData["disabled"] = 0;
                 var data = {};
                 data[id] = JSON.stringify(userData);
                 chrome.storage.local.set(data, function(){
-                    dbg(`[tag.js-updateItem-nowEnabled] ${id}: user info saved`);
+                    dbg(`[tag.js-updateItem] ${id}: ユーザーを表示として保存`);
                     updateItem(element, userData, true);
                 });
             });
-        } else { // クリックして表示した時
+            dbg(`[tag.js-updateItem] ${userData["id"]}: 非表示完了`);
+        } else { // 初期化時で非表示ユーザーではない時 or クリックして表示した時
             element.find(".disabled").remove();
             element.find(".enabler").remove();
             element.find(".itemTime").css({"display":"block"});
@@ -50,18 +51,22 @@ $(function(){
             element.find(".itemContent").css({"display":"block"});
             element.find(".disabler").css({"display":"block"});
             element.find(".enabler").css({"display":"none"});
+            dbg(`[tag.js-updateItem] ${userData["id"]}: 表示完了`);
         }
+        dbg('[tag.js-updateItem-終] -----');
     };
-
-    if (isDbg && 0) { // 使う時1に
+    
+    // 使う時1に
+    if (isDbg && 0) {
         chrome.storage.local.get(function(item){
             dbg('[tag.js-chrome] item all:');
             console.info(item);
         });
     }
-    setTimeout(() => {
-    // 今の所こうしないとニコニ広告のやつが高確率で失敗する（adPointUrlが'#'になる）
+
+    // 今の所こうしないとニコニ広告のやつが失敗することがある（adPointUrlが'#'になる）
     // できれば再取得ボタンを付けたい
+    setTimeout(() => {
 
     chrome.storage.local.get("watchList", function(item){
         dbg('[tag.js-chrome] item:');
