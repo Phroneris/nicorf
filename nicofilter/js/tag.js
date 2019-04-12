@@ -3,7 +3,7 @@ $(function(){
         dbg(`[tag.js-updateItem-start] ${userData['id']}: ${userData['name']}`);
         var p = element.find("p.itemTime");
         var html = p.html();
-        if (onclick !== true) {
+        if (onclick !== true) { // 初期化時
             if (userData["isUser"] == false) {
                 html = html + `<br/>BY： <a href="https://ch.nicovideo.jp/channel/ch${userData['id']}">${userData['name']}</a>（ch）`;
             } else {
@@ -24,7 +24,7 @@ $(function(){
                 });
             });
         }
-        if (userData["disabled"] == 1) {
+        if (userData["disabled"] == 1) { // クリックして非表示にした時
             element.find(".itemTime").css({"display":"none"});
             element.find(".uadWrap").css({"display":"none"});
             element.find(".itemContent").css({"display":"none"});
@@ -42,7 +42,7 @@ $(function(){
                     updateItem(element, userData, true);
                 });
             });
-        } else {
+        } else { // クリックして表示した時
             element.find(".disabled").remove();
             element.find(".enabler").remove();
             element.find(".itemTime").css({"display":"block"});
@@ -85,7 +85,7 @@ $(function(){
                 dbg(adPointUrl);
                 const ptn = /^.+publish\/([a-z]{2}[0-9]+).*?$/;
                 videoId = adPointUrl.match(ptn) ? adPointUrl.replace(ptn, '$1') : false;
-                isAd = videoId ? true : false;
+                isAd = Boolean(videoId);
                 dbg(videoId);
             }
             if (videoId) {
