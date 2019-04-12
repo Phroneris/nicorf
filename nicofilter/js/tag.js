@@ -4,13 +4,13 @@ $(function(){
         var p = element.find("p.itemTime");
         var html = p.html();
         if (onclick !== true) { // 初期化時
-            if (userData["isUser"] == false) {
-                html = html + `<br/>BY： <a href="https://ch.nicovideo.jp/channel/ch${userData['id']}">${userData['name']}</a>（ch）`;
-            } else {
-                html = html + `<br/>BY： <a href="https://www.nicovideo.jp/user/${userData['id']}">${userData['name']}</a>`;
-            }
-            html = html + '<br/>';
-            html = html + '<button class="disabler">非表示にする</button>';
+            const isCh = userData["isUser"]==false;
+            const userUrl = isCh ? `ch.nicovideo.jp/channel/ch${userData['id']}` : `www.nicovideo.jp/user/${userData['id']}`;
+            html = html
+                +   `<div class="userLink">`
+                +       `${isCh?'CH':'BY'}：<a href="https://${userUrl}" target="_blank" rel="noopener">${userData['name']}</a>`
+                +   `</div>`
+                +   `<button class="disabler">非表示にする</button>`;
             p.html(html);
 
             element.find(".disabler").on("click", function(e){
