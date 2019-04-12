@@ -1,17 +1,13 @@
 $(function(){
+    // まずスペースを確保してレイアウト崩壊を避ける
+    $(".itemTime").append(`<div class="userLink"><span style="color:#999;">（読み込み中…）</span></div><button class="disabler">非表示にする</button>`);
+
     function updateItem(element, userData, onclick){
         dbg(`[tag.js-updateItem-始] ID: ${userData['id']}, name: ${userData['name']}`);
-        var p = element.find("p.itemTime");
-        var html = p.html();
         if (onclick !== true) { // 初期化時
             const isCh = userData["isUser"]==false;
             const userUrl = isCh ? `ch.nicovideo.jp/channel/ch${userData['id']}` : `www.nicovideo.jp/user/${userData['id']}`;
-            html = html
-                +   `<div class="userLink">`
-                +       `${isCh?'CH':'BY'}：<a href="https://${userUrl}" target="_blank" rel="noopener">${userData['name']}</a>`
-                +   `</div>`
-                +   `<button class="disabler">非表示にする</button>`;
-            p.html(html);
+            element.find("div.userLink").empty().append(`${isCh?'CH':'BY'}：<a href="https://${userUrl}" target="_blank" rel="noopener">${userData['name']}</a>`);
 
             element.find(".disabler").on("click", function(e){ // 初期化時はdisablerクリック時ではないのでスルーされる。クリック時はいきなりここに来る
                 var id = userData["id"];
