@@ -21,13 +21,8 @@ $(function(){
             });
         }
         if (userData["disabled"] == 1) { // 初期化時で非表示ユーザーの時 or クリックして非表示にした時
-            element.find(".itemTime").css({"display":"none"});
-            element.find(".uadWrap").css({"display":"none"});
-            element.find(".itemContent").css({"display":"none"});
-            element.append('<div class="dummyTime" style="color:#999;">-</div>');
-            element.append('<div class="disabled">非表示にしました</div>');
-            element.append('<button class="enabler">表示する</button>');
-            element.find(".disabler").css({"display":"none"});
+            element.find(".itemTime, .uadWrap, .itemContent, .disabler").css({"display":"none"});
+            element.append('<div class="dummyTime" style="color:#999;">-</div><div class="disabled">非表示にしました</div><button class="enabler">表示する</button>');
             element.find(".enabler").css({"display":"block"});
             element.find(".enabler").on("click", function(e){ // 初期化時はenablerクリック時ではないのでスルーされる。クリック時はいきなりここに来る
                 var id = userData["id"];
@@ -41,13 +36,8 @@ $(function(){
             });
             dbg(`[tag.js-updateItem] ${userData["id"]}: 非表示完了`);
         } else { // 初期化時で非表示ユーザーではない時 or クリックして表示した時
-            element.find(".dummyTime").remove();
-            element.find(".disabled").remove();
-            element.find(".enabler").remove();
-            element.find(".itemTime").css({"display":"block"});
-            element.find(".uadWrap").css({"display":"block"});
-            element.find(".itemContent").css({"display":"block"});
-            element.find(".disabler").css({"display":"block"});
+            element.find(".dummyTime, .disabled, .enabler").remove();
+            element.find(".itemTime, .uadWrap, .itemContent, .disabler").css({"display":"block"});
             element.find(".enabler").css({"display":"none"});
             dbg(`[tag.js-updateItem] ${userData["id"]}: 表示完了`);
         }
