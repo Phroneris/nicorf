@@ -1,6 +1,6 @@
 { "manifest_version": 2
 , "name": "NicoRF"
-, "version": "1.7.0"
+, "version": "1.8.0"
 , "description": "ニコニコ動画ランキングで投稿者を表示したりする拡張。"
 
 , "icons":
