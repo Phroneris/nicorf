@@ -29,19 +29,21 @@
             , "https://live.nicovideo.jp/ranking*"
           ]
         , "js": ["js/vendor/jquery.min.js", "js/liveranking.js"]
-        , "css": ["css/common.css"]
+        , "css": ["css/liveranking.css"]
         }
     ,   { "matches": [
             "http://www.nicovideo.jp/tag/*"
             , "https://www.nicovideo.jp/tag/*"
           ]
         , "js": ["js/vendor/jquery.min.js", "js/script.js", "js/tag.js"]
+        , "css": ["css/tag.css"]
         }
     ,   { "matches": [
             "https://www.nicovideo.jp/search/*"
             , "http://www.nicovideo.jp/search/*"
           ]
         , "js": ["js/vendor/jquery.min.js", "js/script.js", "js/tag.js"]
+        , "css": ["css/tag.css"]
         }
     ,   { "matches": [
             "http://www.nicovideo.jp/user/*"
