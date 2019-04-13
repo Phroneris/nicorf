@@ -44,7 +44,7 @@ $(function(){
         dbg('[tag.js-updateItem-終] -----');
     };
     
-    // 使う時1に
+    // 使う時1に（デバッグ時でさえ常に表示すると邪魔なので）
     if (isDbg && 0) {
         chrome.storage.local.get(function(item){
             dbg('[tag.js-chrome] item all:');

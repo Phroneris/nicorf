@@ -1,7 +1,6 @@
-
 $(function(){
     function updateRanking(rankingElement, userData, onclick) {
-        console.log(userData['id']+': '+userData['name']);
+        dbg(`[ranking.js-updateRanking-始] ID: ${userData['id']}, name: ${userData['name']}`);
         var p = rankingElement.find("p.itemTime");
         var html = p.html();
         if (onclick !== true) {
@@ -20,7 +19,7 @@ $(function(){
                 var data = {};
                 data[id] = JSON.stringify(userData);
                 chrome.storage.local.set(data, function(){
-                    console.log(id + " : user info saved");
+                    dbg(`[ranking.js-updateRanking] ${id}: ユーザーを非表示として保存`);
                     updateRanking(rankingElement, userData, true);
                 });
             });
@@ -30,7 +29,7 @@ $(function(){
                 var data = {};
                 data[id] = JSON.stringify(userData);
                 chrome.storage.local.set(data, function(){
-                    console.log(id + " : user info saved");
+                    dbg(`[ranking.js-updateRanking] ${id}: ユーザーを表示として保存`);
                     updateRanking(rankingElement, userData, true);
                 });
             });
@@ -49,6 +48,7 @@ $(function(){
             rankingElement.find(".disabler").css({"display":"block"});
             rankingElement.find(".enabler").css({"display":"none"});
         }
+        dbg('[tag.js-updateRanking-終] -----');
     };
 
     chrome.storage.local.get("watchList", function(item) {
@@ -65,10 +65,10 @@ $(function(){
             if (!videoId) {
               return;
             }
-            console.log(videoId);
+            dbg(videoId);
             chrome.storage.local.get(videoId, function(item){
                 var userId = item[videoId];
-                console.log('got userId:'+userId+" - videoId of "+videoId);
+                dbg(`[ranking.js-chrome] got userId: ${userId} - videoId of ${videoId}`);
                 if(!userId){
                     $.getVideoInfo(thisObject, videoId, function(elem, user){
                         updateRanking(elem, user);
@@ -76,7 +76,7 @@ $(function(){
                 }else{
                     chrome.storage.local.get(userId, function(item){
                         var user = item[userId];
-                        console.log('got user data:'+user);
+                        dbg(`[ranking.js-chrome-ifUserId] got user data: ${user}`);
                         if(!user){
                             $.getVideoInfo(thisObject, videoId, function(elem, user){
                                 updateRanking(elem, user);
@@ -90,7 +90,7 @@ $(function(){
             });
 
             if (watchList[videoId]) {
-                console.log("videoId:"+videoId+"---"+watchList[videoId]);
+                dbg(`[ranking.js-chrome-ifWlVideoId] videoId: ${videoId} --- ${watchList[videoId]}`);
                 thisObject.css({opacity:0.3});
                 var numWrap = thisObject.find("div.rankingNumWrap");
                 numWrap.append('<p>視聴済み:'+watchList[videoId]+'回</p>');
