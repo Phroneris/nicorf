@@ -14,6 +14,7 @@
     , "unlimitedStorage"
     , "http://ext.nicovideo.jp/*"
     , "https://ext.nicovideo.jp/*"
+    , "https://cors.io/*"
     ]
 
 , "content_scripts":
