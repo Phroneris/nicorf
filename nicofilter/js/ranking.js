@@ -1,4 +1,3 @@
-
 $(function(){
     function updateRanking(rankingElement, userData, onclick) {
         dbg(`[ranking.js-updateRanking-始] ID: ${userData['id']}, name: ${userData['name']}`);
