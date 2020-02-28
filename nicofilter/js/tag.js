@@ -55,6 +55,7 @@ $(function(){
     // 今のところ、遅延させないとニコニ広告のやつが失敗することがある（adPointUrlが'#'になる）
     // できれば再取得ボタンを付けたい
     setTimeout(() => { chrome.storage.local.get("watchList", function(item){
+
         dbg('[tag.js-chrome] item:');
         dbg(item);
         const watchList = JSON.parse(item["watchList"] || '{}');
@@ -105,6 +106,7 @@ $(function(){
                 }
             }
         });
+
     }); }, 500);
 });
 
