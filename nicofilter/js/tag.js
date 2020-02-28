@@ -59,7 +59,7 @@ $(function(){
     chrome.storage.local.get("watchList", function(item){
         dbg('[tag.js-chrome] item:');
         dbg(item);
-        const watchList = JSON.parse(item["watchList"]) || {};
+        const watchList = JSON.parse(item["watchList"] || '{}');
         dbg('[tag.js-chrome] watchList:');
         dbg(watchList);
 
