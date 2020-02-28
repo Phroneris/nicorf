@@ -42,8 +42,8 @@ $(function(){
             dbg(`[tag.js-updateItem] ${userData["id"]}: 表示完了`);
         }
         dbg('[tag.js-updateItem-終] -----');
-    };
-    
+    }
+
     // 使う時1に（デバッグ時でさえ常に表示すると邪魔なので）
     if (isDbg && 0) {
         chrome.storage.local.get(function(item){
@@ -52,11 +52,9 @@ $(function(){
         });
     }
 
-    // 今の所こうしないとニコニ広告のやつが失敗することがある（adPointUrlが'#'になる）
+    // 今のところ、遅延させないとニコニ広告のやつが失敗することがある（adPointUrlが'#'になる）
     // できれば再取得ボタンを付けたい
-    setTimeout(() => {
-
-    chrome.storage.local.get("watchList", function(item){
+    setTimeout(() => { chrome.storage.local.get("watchList", function(item){
         dbg('[tag.js-chrome] item:');
         dbg(item);
         const watchList = JSON.parse(item["watchList"] || '{}');
@@ -107,8 +105,6 @@ $(function(){
                 }
             }
         });
-    });
-
-    }, 500);
+    }); }, 500);
 });
 
