@@ -5,7 +5,7 @@ dbg = function(v){ if(isDbg){console.log(v);} };
 $.getVideoInfo = function(thisObject, id, callback){
     $.ajax({
         type: 'GET',
-        url: `https://cors.io/?https://ext.nicovideo.jp/api/getthumbinfo/${id}`, // Cross-Origin Read Blocking を回避（不安）
+        url: `https://cors-anywhere.herokuapp.com/https://ext.nicovideo.jp/api/getthumbinfo/${id}`,
         dataType: 'html',
         success: function(data, textStatus, jqXHR){
             var url = $("watch_url", data).text();
