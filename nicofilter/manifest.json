@@ -14,7 +14,6 @@
     , "unlimitedStorage"
     , "http://ext.nicovideo.jp/*"
     , "https://ext.nicovideo.jp/*"
-    , "https://cors-anywhere.herokuapp.com/*"
     ]
 
 , "content_scripts":
