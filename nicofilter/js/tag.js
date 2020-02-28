@@ -68,7 +68,7 @@ $(function(){
         dbg('[tag.js-chrome] watchList:');
         dbg(watchList);
 
-        $("ul[data-video-list] li.item").each(function(){
+        $("ul[data-video-list] li.item, .suggestVideo").each(function(){
             var thisObject = $(this);
             var videoId = thisObject.find('.itemThumb').data('id');
             var isAd = false;
