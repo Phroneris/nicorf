@@ -10,9 +10,9 @@ $(function(){
             element.find("div.userLink").empty().append(`${isCh?'CH':'BY'}：<a href="https://${userUrl}" target="_blank" rel="noopener">${userData['name']}</a>`);
 
             element.find(".disabler").on("click", function(e){ // 初期化時はdisablerクリック時ではないのでスルーされる。クリック時はいきなりここに来る
-                var id = userData["id"];
+                const id = userData["id"];
                 userData["disabled"] = 1;
-                var data = {};
+                const data = {};
                 data[id] = JSON.stringify(userData);
                 chrome.storage.local.set(data, function(){
                     dbg(`[tag.js-updateItem] ${id}: ユーザーを非表示として保存`);
@@ -25,9 +25,9 @@ $(function(){
             element.append('<div class="dummyTime" style="color:#999;">-</div><div class="disabled">非表示にしました</div><button class="enabler">表示する</button>');
             element.find(".enabler").css({"display":"block"});
             element.find(".enabler").on("click", function(e){ // 初期化時はenablerクリック時ではないのでスルーされる。クリック時はいきなりここに来る
-                var id = userData["id"];
+                const id = userData["id"];
                 userData["disabled"] = 0;
-                var data = {};
+                const data = {};
                 data[id] = JSON.stringify(userData);
                 chrome.storage.local.set(data, function(){
                     dbg(`[tag.js-updateItem] ${id}: ユーザーを表示として保存`);
@@ -59,19 +59,14 @@ $(function(){
     chrome.storage.local.get("watchList", function(item){
         dbg('[tag.js-chrome] item:');
         dbg(item);
-        var watchList = item["watchList"];
-        if (!watchList) {
-            watchList = {};
-        } else {
-            watchList = JSON.parse(watchList);
-        }
+        const watchList = JSON.parse(item["watchList"]) || {};
         dbg('[tag.js-chrome] watchList:');
         dbg(watchList);
 
         $("ul[data-video-list] li.item, .suggestVideo").each(function(){
-            var thisObject = $(this);
-            var videoId = thisObject.find('.itemThumb').data('id');
-            var isAd = false;
+            const thisObject = $(this);
+            let videoId = thisObject.find('.itemThumb').data('id'); // if(!videoId) 内でしか変更されない。実質const
+            let isAd = false; // 同上
             if(!videoId) {
                 dbg('[tag.js-chrome-!videoId] adPointUrl, videoId:');
                 const adPointUrl = thisObject.find('.count.ads a').attr('href');
@@ -83,7 +78,7 @@ $(function(){
             }
             if (videoId) {
                 chrome.storage.local.get(videoId, function(item){
-                    var userId = item[videoId];
+                    const userId = item[videoId];
                     const isAdStr = isAd ? ` - isAd: ${isAd.toString()}` : '';
                     dbg(`[tag.js-chrome-ifVideoId] got userId: ${userId} - videoId of ${videoId}${isAdStr}`);
                     if(!userId){
@@ -92,14 +87,14 @@ $(function(){
                         });
                     }else{
                         chrome.storage.local.get(userId, function(item){
-                            var user = item[userId];
+                            const user = item[userId];
                             dbg(`[tag.js-chrome-ifUserId] got user data: ${user}`);
                             if(!user){
                                 $.getVideoInfo(thisObject, videoId, function(elem, user){
                                     updateItem(elem, user);
                                 });
                             }else{
-                                userData = JSON.parse(user);
+                                const userData = JSON.parse(user);
                                 updateItem(thisObject, userData);
                             }
                         });
