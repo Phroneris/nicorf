@@ -7,6 +7,7 @@ $.getVideoInfo = function(thisObject, id, callback) {
     $.ajax({
         type: 'GET',
         url: `https://cors-anywhere.herokuapp.com/https://ext.nicovideo.jp/api/getthumbinfo/${id}`,
+        // 何ページも見てると "Too Many Requests" と怒られてつらい
         dataType: 'html',
         success: function(data, textStatus, jqXHR) {
             const url    = $("watch_url"    , data).text();
