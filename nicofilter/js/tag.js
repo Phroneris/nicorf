@@ -1,15 +1,25 @@
 $(function() {
     // まずスペースを確保してレイアウト崩壊を避ける
-    $(".itemTime").append(`<div class="userLink"><span style="color:#999;">（読み込み中…）</span></div><button class="disabler">非表示にする</button>`);
+    // できればロード中の簡単なアニメーションも付けたい
+    $(".itemTime").append(`<div class="userLink"><span class="userStr loading">（読み込み中…）</span></div><button class="disabler">非表示にする</button>`);
 
     function updateItem(element, userData, onclick) {
         dbg(`[tag.js-updateItem-始] ID: ${userData['id']}, name: ${userData['name']}`);
+        const isFailed = userData['isFailed'];
         if (onclick !== true) { // 初期化時
-            const isCh = userData["isUser"]==false;
-            const userUrl = isCh ? `ch.nicovideo.jp/channel/ch${userData['id']}` : `www.nicovideo.jp/user/${userData['id']}`;
-            element.find("div.userLink").empty().append(`${isCh?'CH':'BY'}：<a href="https://${userUrl}" target="_blank" rel="noopener">${userData['name']}</a>`);
+            const name = userData['name'];
+            let userDisplay;
+            if (isFailed) {
+                userDisplay = `<span class="userStr failed">${name}</span>`;
+                element.find(".disabler").addClass("failed").text('エラー');
+            } else {
+                const isCh = userData['isUser']==false;
+                const userUrl = isCh ? `ch.nicovideo.jp/channel/ch${userData['id']}` : `www.nicovideo.jp/user/${userData['id']}`;
+                userDisplay = `<span class="userPre">${isCh?'CH':'BY'}：</span><a class="userStr" href="https://${userUrl}" target="_blank" rel="noopener">${name}</a>`;
+            }
+            element.find("div.userLink").empty().append(userDisplay);
 
-            element.find(".disabler").on("click", function(e) { // 初期化時はdisablerクリック時ではないのでスルーされる。クリック時はいきなりここに来る
+            element.find(".disabler:not(.failed)").on("click", function(e) { // 初期化時はdisablerクリック時ではないのでスルーされる。クリック時はいきなりここに来る
                 const id = userData["id"];
                 userData["disabled"] = 1;
                 const data = {};

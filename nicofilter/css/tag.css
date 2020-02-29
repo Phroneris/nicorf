@@ -3,3 +3,9 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+.userStr.loading {
+    color: #999;
+}
+.userStr.failed {
+    color: red;
+}
